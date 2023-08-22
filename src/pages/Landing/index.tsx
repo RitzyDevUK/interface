@@ -24,6 +24,9 @@ import { TRANSITION_DURATIONS } from 'theme/styles'
 import { Z_INDEX } from 'theme/zIndex'
 import { getDownloadAppLinkProps } from 'utils/openDownloadApp'
 
+import OldSpook1 from '../../assets/images/oldspook1.png'
+import OldSpook2 from '../../assets/images/oldspook2.png'
+
 const PageContainer = styled.div`
   position: absolute;
   top: 0;
@@ -51,7 +54,7 @@ const Gradient = styled.div<{ isDarkMode: boolean }>`
           background: linear-gradient(rgba(8, 10, 24, 0) 0%, rgb(8 10 24 / 100%) 45%);
         `
       : css`
-          background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(255 255 255 /100%) 45%);
+          background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(220, 220, 220, 1) 45%);
         `};
   z-index: ${Z_INDEX.under_dropdown};
   pointer-events: none;
@@ -74,13 +77,24 @@ const GlowContainer = styled.div`
   @media screen and (min-width: ${({ theme }) => theme.breakpoint.md}px) {
     height: 100vh;
   }
+  background-image: url('https://assets.spooky.fi/background/moon_cat_.png'),
+    url('https://assets.spooky.fi/background/stars_.png'),
+    radial-gradient(circle at bottom, rgba(50, 94, 128, 1) 10%, rgba(16, 30, 62, 1) 90%);
+  background-repeat:
+    // no-repeat,
+    // repeat-x,
+    no-repeat, no-repeat, no-repeat;
+  background-attachment: scroll;
+  background-position:
+      // bottom 375px center, bottom 375px center,
+    top -48px center, top center, top;
 `
 
 const Glow = styled.div`
   position: absolute;
   top: 68px;
   bottom: 0;
-  background: radial-gradient(72.04% 72.04% at 50% 3.99%, #ff37eb 0%, rgba(166, 151, 255, 0) 100%);
+  background: radial-gradient(72.04% 72.04% at 50% 3.99%, #5b1a75 0%, rgba(166, 151, 255, 0) 100%);
   filter: blur(72px);
   border-radius: 24px;
   max-width: 480px;
@@ -96,8 +110,7 @@ const ContentContainer = styled.div<{ isDarkMode: boolean }>`
   justify-content: flex-end;
   width: 100%;
   padding: 0 0 40px;
-  max-width: min(720px, 90%);
-  min-height: 535px;
+  min-height: 500px;
   z-index: ${Z_INDEX.under_dropdown};
   transition: ${({ theme }) => `${theme.transition.duration.medium} ${theme.transition.timing.ease} opacity`};
   height: ${({ theme }) => `calc(100vh - ${theme.navHeight + theme.mobileBottomBarHeight}px)`};
@@ -105,19 +118,23 @@ const ContentContainer = styled.div<{ isDarkMode: boolean }>`
   * {
     pointer-events: auto;
   }
+  background-image: url(${OldSpook1}), url(${OldSpook2});
+  background-size: contain, contain;
+  background-repeat: no-repeat, no-repeat;
+  background-position: right bottom, left bottom;
 `
 
 const TitleText = styled.h1<{ isDarkMode: boolean }>`
   color: transparent;
   font-size: 36px;
   line-height: 44px;
-  font-weight: 535;
+  font-weight: 700;
   text-align: center;
   margin: 0 0 24px;
   ${({ isDarkMode }) =>
     isDarkMode
       ? css`
-          background: linear-gradient(20deg, rgba(255, 244, 207, 1) 10%, rgba(255, 87, 218, 1) 100%);
+          background: linear-gradient(20deg, rgba(113, 113, 184, 1) 10%, rgba(140, 140, 227, 1) 100%);
         `
       : css`
           background: linear-gradient(10deg, rgba(255, 79, 184, 1) 0%, rgba(255, 159, 251, 1) 100%);
@@ -162,20 +179,20 @@ const LandingButton = styled(BaseButton)`
 `
 
 const ButtonCTA = styled(LandingButton)`
-  background: linear-gradient(93.06deg, #ff00c7 2.66%, #ff9ffb 98.99%);
+  background: linear-gradient(93.06deg, #3f1251 2.66%, #5b1a75 98.99%);
   border: none;
   color: ${({ theme }) => theme.white};
   transition: ${({ theme }) => `all ${theme.transition.duration.medium} ${theme.transition.timing.ease}`};
 
   &:hover {
-    box-shadow: 0px 0px 16px 0px #ff00c7;
+    box-shadow: 0px 0px 16px 0px #5b1a75;
   }
 `
 
 const ButtonCTAText = styled.p`
   margin: 0px;
   font-size: 16px;
-  font-weight: 535;
+  font-weight: 600;
   white-space: nowrap;
 
   @media screen and (min-width: ${BREAKPOINTS.sm}px) {
@@ -224,10 +241,10 @@ const AboutContentContainer = styled.div<{ isDarkMode: boolean }>`
   ${({ isDarkMode }) =>
     isDarkMode
       ? css`
-          background: linear-gradient(179.82deg, rgba(0, 0, 0, 0) 0.16%, #050026 99.85%);
+          background: rgb(8 10 24 / 100%) 45%;
         `
       : css`
-          background: linear-gradient(179.82deg, rgba(255, 255, 255, 0) 0.16%, #eaeaea 99.85%);
+          background: rgb(220, 220, 220, 1) 45%;
         `};
   @media screen and (min-width: ${BREAKPOINTS.md}px) {
     padding: 0 96px 5rem;
@@ -262,13 +279,21 @@ const CardGrid = styled.div<{ cols: number }>`
   }
 `
 
-const LandingSwapContainer = styled.div`
+const LandingSwapContainer = styled.div<{ isDarkMode: boolean }>`
   height: ${({ theme }) => `calc(100vh - ${theme.mobileBottomBarHeight}px)`};
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 1;
+  ${({ isDarkMode }) =>
+    isDarkMode
+      ? css`
+          background: linear-gradient(rgba(8, 10, 24, 0) 0%, rgb(8 10 24 / 100%) 45%);
+        `
+      : css`
+          background: linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(220, 220, 220, 1) 45%);
+        `};
 `
 
 const SwapCss = css`
@@ -327,7 +352,7 @@ export default function Landing() {
   return (
     <Trace page={InterfacePageName.LANDING_PAGE} shouldLogImpression>
       <PageContainer data-testid="landing-page">
-        <LandingSwapContainer>
+        <LandingSwapContainer isDarkMode={isDarkMode}>
           <TraceEvent
             events={[BrowserEvent.onClick]}
             name={SharedEventName.ELEMENT_CLICKED}
@@ -418,12 +443,11 @@ export default function Landing() {
 const DownloadWalletLink = styled.a`
   display: inline-flex;
   gap: 8px;
-  margin-top: 24px;
   color: ${({ theme }) => theme.neutral2};
   text-decoration: none;
   font-size: 16px;
   line-height: 24px;
-  font-weight: 535;
+  font-weight: 500;
   text-align: center;
 
   :hover {

@@ -14,7 +14,7 @@ export const MAIN_CARDS = [
   {
     to: '/swap',
     title: 'Swap tokens',
-    description: 'Buy, sell, and explore tokens on Ethereum, Polygon, Optimism, and more.',
+    description: 'Buy, sell, and explore tokens on SpookySwap.',
     cta: 'Trade Tokens',
     darkBackgroundImgSrc: swapCardImgSrc,
     lightBackgroundImgSrc: swapCardImgSrc,
@@ -42,9 +42,9 @@ export const MORE_CARDS = [
   {
     to: 'https://support.uniswap.org/hc/en-us/articles/11306574799117-How-to-use-Moon-Pay-on-the-Uniswap-web-app-',
     external: true,
-    title: 'Buy crypto',
-    description: 'Buy crypto with your credit card or bank account at the best rates.',
     lightIcon: <DollarSign color={lightTheme.neutral3} size={48} />,
+    title: 'Stake BOO',
+    description: 'Stake BOO for xBOO to claim your portion of trade fees from all DEX trades.',
     darkIcon: <StyledCardLogo src={darkDollarImgSrc} alt="Earn" />,
     cta: 'Buy now',
     elementName: InterfaceElementName.ABOUT_PAGE_BUY_CRYPTO_CARD,
@@ -61,9 +61,9 @@ export const MORE_CARDS = [
   {
     to: 'https://docs.uniswap.org',
     external: true,
-    title: 'Build dApps',
-    description: 'Build apps and tools on the largest DeFi protocol on Ethereum.',
     lightIcon: <Terminal color={lightTheme.neutral3} size={48} />,
+    title: 'Bridge',
+    description: 'Bridge and Cross-Chain swap tokens using bridges provided by our partners.',
     darkIcon: <StyledCardLogo src={darkTerminalImgSrc} alt="Developers" />,
     cta: 'Developer docs',
     elementName: InterfaceElementName.ABOUT_PAGE_DEV_DOCS_CARD,

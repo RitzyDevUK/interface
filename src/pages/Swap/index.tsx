@@ -18,6 +18,7 @@ import { ButtonError, ButtonLight, ButtonPrimary } from 'components/Button'
 import { GrayCard } from 'components/Card'
 import { AutoColumn } from 'components/Column'
 import SwapCurrencyInputPanel from 'components/CurrencyInputPanel/SwapCurrencyInputPanel'
+import Img from 'components/Img'
 import { NetworkAlert } from 'components/NetworkAlert/NetworkAlert'
 import { AutoRow } from 'components/Row'
 import confirmPriceImpactWithoutFee from 'components/swap/confirmPriceImpactWithoutFee'
@@ -62,6 +63,7 @@ import { formatCurrencyAmount, NumberType } from 'utils/formatNumbers'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { computeRealizedPriceImpact, warningSeverity } from 'utils/prices'
 import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
+import { isMobile } from 'utils/userAgent'
 
 import { useScreenSize } from '../../hooks/useScreenSize'
 import { useIsDarkMode } from '../../theme/components/ThemeToggle'
@@ -113,8 +115,29 @@ const SwapSection = styled.div`
   }
 `
 
+const CatContainer = styled.div<{ gap?: string }>`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: ${({ gap }) => gap ?? 0};
+
+  ${({ theme }) => theme.breakpoint.md} {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+`
+
 const OutputSwapSection = styled(SwapSection)`
   border-bottom: ${({ theme }) => `1px solid ${theme.surface1}`};
+`
+
+const ImageWrapper = styled.div`
+  @media only screen and (max-width: 900px) {
+    display: none;
+  }
 `
 
 function getIsValidSwapQuote(
@@ -146,18 +169,22 @@ export default function SwapPage({ className }: { className?: string }) {
 
   return (
     <Trace page={InterfacePageName.SWAP_PAGE} shouldLogImpression>
-      <PageWrapper>
-        <Swap
-          className={className}
-          chainId={supportedChainId ?? ChainId.MAINNET}
-          prefilledState={{
-            [Field.INPUT]: { currencyId: loadedUrlParams?.[Field.INPUT]?.currencyId },
-            [Field.OUTPUT]: { currencyId: loadedUrlParams?.[Field.OUTPUT]?.currencyId },
-          }}
-          disableTokenInputs={supportedChainId === undefined}
-        />
-        <NetworkAlert />
-      </PageWrapper>
+      <CatContainer gap="12px">
+        <ImageWrapper>{!isMobile && <Img src="https://assets.spooky.fi/mirror_grim.png" width={280} />}</ImageWrapper>
+        <PageWrapper>
+          <Swap
+            className={className}
+            chainId={supportedChainId ?? ChainId.MAINNET}
+            prefilledState={{
+              [Field.INPUT]: { currencyId: loadedUrlParams?.[Field.INPUT]?.currencyId },
+              [Field.OUTPUT]: { currencyId: loadedUrlParams?.[Field.OUTPUT]?.currencyId },
+            }}
+            disableTokenInputs={supportedChainId === undefined}
+          />
+          <NetworkAlert />
+        </PageWrapper>
+        <ImageWrapper>{!isMobile && <Img src="https://assets.spooky.fi/mirror_ace.png" width={280} />}</ImageWrapper>
+      </CatContainer>
       {location.pathname === '/swap' && <SwitchLocaleLink />}
     </Trace>
   )

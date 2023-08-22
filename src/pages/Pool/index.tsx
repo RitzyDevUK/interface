@@ -5,6 +5,7 @@ import { Trace, TraceEvent } from 'analytics'
 import { useToggleAccountDrawer } from 'components/AccountDrawer'
 import { ButtonGray, ButtonPrimary, ButtonText } from 'components/Button'
 import { AutoColumn } from 'components/Column'
+import Img from 'components/Img'
 import { FlyoutAlignment, Menu } from 'components/Menu'
 import PositionList from 'components/PositionList'
 import { RowBetween, RowFixed } from 'components/Row'
@@ -20,12 +21,13 @@ import { useUserHideClosedPositions } from 'state/user/hooks'
 import styled, { css, useTheme } from 'styled-components'
 import { HideSmall, ThemedText } from 'theme'
 import { PositionDetails } from 'types/position'
+import { isMobile } from 'utils/userAgent'
 
 import CTACards from './CTACards'
 import { LoadingRows } from './styled'
 
 const PageWrapper = styled(AutoColumn)`
-  padding: 68px 8px 0px;
+  padding: 68px 0px 0px;
   max-width: 870px;
   width: 100%;
 
@@ -74,7 +76,7 @@ const PoolMenuItem = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  font-weight: 535;
+  font-weight: 500;
 `
 const MoreOptionsButton = styled(ButtonGray)`
   border-radius: 12px;
@@ -133,6 +135,8 @@ const MainContentWrapper = styled.main`
   border-radius: 16px;
   display: flex;
   flex-direction: column;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
+    0px 24px 32px rgba(0, 0, 0, 0.01);
   overflow: hidden;
 `
 
@@ -155,33 +159,61 @@ function PositionsLoadingPlaceholder() {
   )
 }
 
+const CatContainer = styled.div<{ gap?: string }>`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: ${({ gap }) => gap ?? 0};
+
+  ${({ theme }) => theme.breakpoint.md} {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+`
+
+const ImageWrapper = styled.div`
+  @media only screen and (max-width: 900px) {
+    display: none;
+  }
+`
+
 function WrongNetworkCard() {
   const theme = useTheme()
 
   return (
     <>
-      <PageWrapper>
-        <AutoColumn gap="lg" justify="center">
-          <AutoColumn gap="lg" style={{ width: '100%' }}>
-            <TitleRow padding="0">
-              <ThemedText.LargeHeader>
-                <Trans>Pools</Trans>
-              </ThemedText.LargeHeader>
-            </TitleRow>
-
-            <MainContentWrapper>
-              <ErrorContainer>
-                <ThemedText.BodyPrimary color={theme.neutral3} textAlign="center">
-                  <NetworkIcon strokeWidth={1.2} />
-                  <div data-testid="pools-unsupported-err">
-                    <Trans>Your connected network is unsupported.</Trans>
-                  </div>
-                </ThemedText.BodyPrimary>
-              </ErrorContainer>
-            </MainContentWrapper>
+      <CatContainer>
+        <ImageWrapper>
+          {!isMobile && <Img src="https://assets.spooky.fi/LiquidityCats_Left.png" width={227} />}
+        </ImageWrapper>
+        <PageWrapper>
+          <AutoColumn gap="lg" justify="center">
+            <AutoColumn gap="lg" style={{ width: '100%' }}>
+              <TitleRow padding="0">
+                <ThemedText.LargeHeader>
+                  <Trans>Pools</Trans>
+                </ThemedText.LargeHeader>
+              </TitleRow>
+              <MainContentWrapper>
+                <ErrorContainer>
+                  <ThemedText.BodyPrimary color={theme.neutral3} textAlign="center">
+                    <NetworkIcon strokeWidth={1.2} />
+                    <div data-testid="pools-unsupported-err">
+                      <Trans>Your connected network is unsupported.</Trans>
+                    </div>
+                  </ThemedText.BodyPrimary>
+                </ErrorContainer>
+              </MainContentWrapper>
+            </AutoColumn>
           </AutoColumn>
-        </AutoColumn>
-      </PageWrapper>
+        </PageWrapper>
+        <ImageWrapper>
+          {!isMobile && <Img src="https://assets.spooky.fi/LiquidityCats_Right.png" width={227} />}
+        </ImageWrapper>
+      </CatContainer>
       <SwitchLocaleLink />
     </>
   )
@@ -253,83 +285,91 @@ export default function Pool() {
 
   return (
     <Trace page={InterfacePageName.POOL_PAGE} shouldLogImpression>
-      <PageWrapper>
-        <AutoColumn gap="lg" justify="center">
-          <AutoColumn gap="lg" style={{ width: '100%' }}>
-            <TitleRow padding="0">
-              <ThemedText.LargeHeader>
-                <Trans>Pools</Trans>
-              </ThemedText.LargeHeader>
-              <ButtonRow>
-                {networkSupportsV2 && (
-                  <PoolMenu
-                    menuItems={menuItems}
-                    flyoutAlignment={FlyoutAlignment.LEFT}
-                    ToggleUI={(props: any) => (
-                      <MoreOptionsButton {...props}>
-                        <MoreOptionsText>
-                          <Trans>More</Trans>
-                          <ChevronDown size={15} />
-                        </MoreOptionsText>
-                      </MoreOptionsButton>
-                    )}
-                  />
-                )}
-                <ResponsiveButtonPrimary data-cy="join-pool-button" id="join-pool-button" as={Link} to="/add/ETH">
-                  + <Trans>New position</Trans>
-                </ResponsiveButtonPrimary>
-              </ButtonRow>
-            </TitleRow>
+      <CatContainer>
+        <ImageWrapper>
+          {!isMobile && <Img src="https://assets.spooky.fi/LiquidityCats_Left.png" width={227} />}
+        </ImageWrapper>
+        <PageWrapper>
+          <AutoColumn gap="lg" justify="center">
+            <AutoColumn gap="lg" style={{ width: '100%' }}>
+              <TitleRow padding="0">
+                <ThemedText.LargeHeader>
+                  <Trans>Pools</Trans>
+                </ThemedText.LargeHeader>
+                <ButtonRow>
+                  {networkSupportsV2 && (
+                    <PoolMenu
+                      menuItems={menuItems}
+                      flyoutAlignment={FlyoutAlignment.LEFT}
+                      ToggleUI={(props: any) => (
+                        <MoreOptionsButton {...props}>
+                          <MoreOptionsText>
+                            <Trans>More</Trans>
+                            <ChevronDown size={15} />
+                          </MoreOptionsText>
+                        </MoreOptionsButton>
+                      )}
+                    />
+                  )}
+                  <ResponsiveButtonPrimary data-cy="join-pool-button" id="join-pool-button" as={Link} to="/add/ETH">
+                    + <Trans>New Position</Trans>
+                  </ResponsiveButtonPrimary>
+                </ButtonRow>
+              </TitleRow>
 
-            <MainContentWrapper>
-              {positionsLoading ? (
-                <PositionsLoadingPlaceholder />
-              ) : filteredPositions && closedPositions && filteredPositions.length > 0 ? (
-                <PositionList
-                  positions={filteredPositions}
-                  setUserHideClosedPositions={setUserHideClosedPositions}
-                  userHideClosedPositions={userHideClosedPositions}
-                />
-              ) : (
-                <ErrorContainer>
-                  <ThemedText.BodyPrimary color={theme.neutral3} textAlign="center">
-                    <InboxIcon strokeWidth={1} style={{ marginTop: '2em' }} />
-                    <div>
-                      <Trans>Your active V3 liquidity positions will appear here.</Trans>
-                    </div>
-                  </ThemedText.BodyPrimary>
-                  {!showConnectAWallet && closedPositions.length > 0 && (
-                    <ButtonText
-                      style={{ marginTop: '.5rem' }}
-                      onClick={() => setUserHideClosedPositions(!userHideClosedPositions)}
-                    >
-                      <Trans>Show closed positions</Trans>
-                    </ButtonText>
-                  )}
-                  {showConnectAWallet && (
-                    <TraceEvent
-                      events={[BrowserEvent.onClick]}
-                      name={InterfaceEventName.CONNECT_WALLET_BUTTON_CLICKED}
-                      properties={{ received_swap_quote: false }}
-                      element={InterfaceElementName.CONNECT_WALLET_BUTTON}
-                    >
-                      <ButtonPrimary
-                        style={{ marginTop: '2em', marginBottom: '2em', padding: '8px 16px' }}
-                        onClick={toggleWalletDrawer}
+              <MainContentWrapper>
+                {positionsLoading ? (
+                  <PositionsLoadingPlaceholder />
+                ) : filteredPositions && closedPositions && filteredPositions.length > 0 ? (
+                  <PositionList
+                    positions={filteredPositions}
+                    setUserHideClosedPositions={setUserHideClosedPositions}
+                    userHideClosedPositions={userHideClosedPositions}
+                  />
+                ) : (
+                  <ErrorContainer>
+                    <ThemedText.BodyPrimary color={theme.neutral3} textAlign="center">
+                      <InboxIcon strokeWidth={1} style={{ marginTop: '2em' }} />
+                      <div>
+                        <Trans>Your active V3 liquidity positions will appear here.</Trans>
+                      </div>
+                    </ThemedText.BodyPrimary>
+                    {!showConnectAWallet && closedPositions.length > 0 && (
+                      <ButtonText
+                        style={{ marginTop: '.5rem' }}
+                        onClick={() => setUserHideClosedPositions(!userHideClosedPositions)}
                       >
-                        <Trans>Connect a wallet</Trans>
-                      </ButtonPrimary>
-                    </TraceEvent>
-                  )}
-                </ErrorContainer>
-              )}
-            </MainContentWrapper>
-            <HideSmall>
-              <CTACards />
-            </HideSmall>
+                        <Trans>Show closed positions</Trans>
+                      </ButtonText>
+                    )}
+                    {showConnectAWallet && (
+                      <TraceEvent
+                        events={[BrowserEvent.onClick]}
+                        name={InterfaceEventName.CONNECT_WALLET_BUTTON_CLICKED}
+                        properties={{ received_swap_quote: false }}
+                        element={InterfaceElementName.CONNECT_WALLET_BUTTON}
+                      >
+                        <ButtonPrimary
+                          style={{ marginTop: '2em', marginBottom: '2em', padding: '8px 16px' }}
+                          onClick={toggleWalletDrawer}
+                        >
+                          <Trans>Connect a wallet</Trans>
+                        </ButtonPrimary>
+                      </TraceEvent>
+                    )}
+                  </ErrorContainer>
+                )}
+              </MainContentWrapper>
+              <HideSmall>
+                <CTACards />
+              </HideSmall>
+            </AutoColumn>
           </AutoColumn>
-        </AutoColumn>
-      </PageWrapper>
+        </PageWrapper>
+        <ImageWrapper>
+          {!isMobile && <Img src="https://assets.spooky.fi/LiquidityCats_Right.png" width={227} />}
+        </ImageWrapper>
+      </CatContainer>
       <SwitchLocaleLink />
     </Trace>
   )

@@ -52,7 +52,7 @@ const Collection = lazy(() => import('nft/pages/collection'))
 const Profile = lazy(() => import('nft/pages/profile/profile'))
 const Asset = lazy(() => import('nft/pages/asset/Asset'))
 
-const BodyWrapper = styled.div`
+const BodyWrapperDark = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -60,6 +60,29 @@ const BodyWrapper = styled.div`
   padding: ${({ theme }) => theme.navHeight}px 0px 5rem 0px;
   align-items: center;
   flex: 1;
+  background-repeat: no-repeat, repeat-x, no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed;
+  background-position: bottom -64px center, bottom -84px center, top center, top 48px center, top;
+  background-image: url('https://assets.spooky.fi/background/cloud_cat.png'),
+    url('https://assets.spooky.fi/background/clouds.png'), url('https://assets.spooky.fi/background/moon_cat_.png'),
+    url('https://assets.spooky.fi/background/stars_.png'),
+    radial-gradient(circle at bottom, rgba(50, 94, 128, 1) 10%, rgba(16, 30, 62, 1) 90%);
+`
+const BodyWrapperLight = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  padding: ${({ theme }) => theme.navHeight}px 0px 5rem 0px;
+  align-items: center;
+  flex: 1;
+  background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed;
+  background-position: top, bottom -64px center, bottom -84px center, top center, top 48px center, top;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)),
+    url('https://assets.spooky.fi/background/cloud_cat.png'), url('https://assets.spooky.fi/background/clouds.png'),
+    url('https://assets.spooky.fi/background/moon_cat_.png'), url('https://assets.spooky.fi/background/stars_.png'),
+    radial-gradient(circle at bottom, rgba(50, 94, 128, 1) 10%, rgba(16, 30, 62, 1) 90%);
 `
 
 const MobileBottomBar = styled.div`
@@ -119,6 +142,12 @@ export default function App() {
   const [routerPreference] = useRouterPreference()
   const [scrolledState, setScrolledState] = useState(false)
 
+  let Background
+  if (isDarkMode) {
+    Background = BodyWrapperDark
+  } else {
+    Background = BodyWrapperLight
+  }
   useAnalyticsReporter()
 
   useEffect(() => {
@@ -217,7 +246,7 @@ export default function App() {
           <HeaderWrapper transparent={isHeaderTransparent}>
             <NavBar blur={isHeaderTransparent} />
           </HeaderWrapper>
-          <BodyWrapper>
+          <Background>
             <Popups />
             <Polling />
             <TopLevelModals />
@@ -338,7 +367,7 @@ export default function App() {
                 <Loader />
               )}
             </Suspense>
-          </BodyWrapper>
+          </Background>
           <MobileBottomBar>
             <PageTabs />
           </MobileBottomBar>
