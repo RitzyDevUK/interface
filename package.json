@@ -294,6 +294,9 @@
     "workbox-routing": "^6.1.0",
     "zustand": "^4.3.6"
   },
+  "resolutions": {
+    "**/@uniswap/sdk-core": "npm:@spookyswaptest/sdk-core@1.0.1"
+  },
   "engines": {
     "npm": "please-use-yarn",
     "node": "18.x",
