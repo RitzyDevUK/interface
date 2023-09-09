@@ -19,7 +19,11 @@ export function getURAddress(chainId?: number, nftURAddress?: string): string | 
   if (chainId === ChainId.MAINNET) {
     return nftURAddress ?? UNIVERSAL_ROUTER_ADDRESS(chainId)
   }
-  return isSupportedChain(chainId) ? UNIVERSAL_ROUTER_ADDRESS(chainId) : undefined
+  return isSupportedChain(chainId)
+    ? chainId == ChainId.BIT_TORRENT_MAINNET
+      ? process.env.REACT_APP_BTT_UNIVERSAL_ROUTER_ADDRESS
+      : UNIVERSAL_ROUTER_ADDRESS(chainId)
+    : undefined
 }
 
 export function useNftUniversalRouterAddress() {
