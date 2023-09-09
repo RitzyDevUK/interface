@@ -48,6 +48,7 @@ const DEFAULT_CHAINS = [
   ChainId.BNB,
   ChainId.AVALANCHE,
   ChainId.BASE,
+  ChainId.BIT_TORRENT_MAINNET,
 ]
 
 type UseMultiChainPositionsData = { positions?: PositionInfo[]; loading: boolean }

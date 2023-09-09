@@ -9,6 +9,7 @@ import baseLogo from 'assets/svg/base_logo.svg'
 import baseSquareLogo from 'assets/svg/base_square_logo.svg'
 import bnbSquareLogoUrl from 'assets/svg/bnb_square_logo.svg'
 import bnbLogo from 'assets/svg/bnb-logo.svg'
+import bittorrentLogo from 'assets/svg/btt-bittorrent_logo.svg'
 import celoLogo from 'assets/svg/celo_logo.svg'
 import celoSquareLogoUrl from 'assets/svg/celo_square_logo.svg'
 import optimismSquareLogoUrl from 'assets/svg/optimism_square_logo.svg'
@@ -19,7 +20,7 @@ import ms from 'ms'
 import { darkTheme } from 'theme/colors'
 
 import { SupportedL1ChainId, SupportedL2ChainId } from './chains'
-import { ARBITRUM_LIST, AVALANCHE_LIST, BASE_LIST, CELO_LIST, OPTIMISM_LIST, PLASMA_BNB_LIST } from './lists'
+import { ARBITRUM_LIST, AVALANCHE_LIST, BASE_LIST, BTTC_LIST, CELO_LIST, OPTIMISM_LIST, PLASMA_BNB_LIST } from './lists'
 
 export const AVERAGE_L1_BLOCK_TIME = ms(`12s`)
 
@@ -257,6 +258,21 @@ const CHAIN_INFO: ChainInfoMap = {
     circleLogoUrl: baseLogo,
     squareLogoUrl: baseSquareLogo,
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    color: darkTheme.chain_84531,
+  },
+  [ChainId.BIT_TORRENT_MAINNET]: {
+    networkType: NetworkType.L1,
+    blockWaitMsBeforeWarning: ms(`25m`),
+    bridge: 'https://bttc.bittorrent.com/',
+    defaultListUrl: BTTC_LIST,
+    docs: '',
+    explorer: 'https://bttcscan.com/',
+    infoLink: '',
+    label: 'Bittorrent',
+    logoUrl: bittorrentLogo,
+    circleLogoUrl: bittorrentLogo,
+    squareLogoUrl: bittorrentLogo,
+    nativeCurrency: { name: 'Bittorrent', symbol: 'BTTC', decimals: 18 },
     color: darkTheme.chain_84531,
   },
 } as const

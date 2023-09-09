@@ -23,6 +23,7 @@ export const CHAIN_IDS_TO_NAMES = {
   [ChainId.BNB]: 'bnb',
   [ChainId.AVALANCHE]: 'avalanche',
   [ChainId.BASE]: 'base',
+  [ChainId.BIT_TORRENT_MAINNET]: 'bit_torrent',
 } as const
 
 // Include ChainIds in this array if they are not supported by the UX yet, but are already in the SDK.
@@ -90,6 +91,7 @@ export const L1_CHAIN_IDS = [
   ChainId.CELO_ALFAJORES,
   ChainId.BNB,
   ChainId.AVALANCHE,
+  ChainId.BIT_TORRENT_MAINNET,
 ] as const
 
 export type SupportedL1ChainId = (typeof L1_CHAIN_IDS)[number]
