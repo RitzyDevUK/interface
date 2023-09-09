@@ -334,6 +334,13 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } =
     'WAVAX',
     'Wrapped AVAX'
   ),
+  [ChainId.BIT_TORRENT_MAINNET]: new Token(
+    ChainId.BIT_TORRENT_MAINNET,
+    '0x23181F21DEa5936e24163FFABa4Ea3B316B57f3C',
+    18,
+    'WBTT',
+    'Wrapped BTT'
+  ),
 }
 
 export function isCelo(chainId: number): chainId is ChainId.CELO | ChainId.CELO_ALFAJORES {
@@ -417,6 +424,28 @@ class AvaxNativeCurrency extends NativeCurrency {
   }
 }
 
+export function isBittorrent(chainId: number): chainId is ChainId.BIT_TORRENT_MAINNET {
+  return chainId === ChainId.BIT_TORRENT_MAINNET
+}
+
+class BttNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId
+  }
+
+  get wrapped(): Token {
+    if (!isBittorrent(this.chainId)) throw new Error('Not bittorrent')
+    const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
+    invariant(wrapped instanceof Token)
+    return wrapped
+  }
+
+  public constructor(chainId: number) {
+    if (!isBittorrent(chainId)) throw new Error('Not bittorrent')
+    super(chainId, 18, 'BTT', 'BTT')
+  }
+}
+
 class ExtendedEther extends Ether {
   public get wrapped(): Token {
     const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
@@ -443,6 +472,8 @@ export function nativeOnChain(chainId: number): NativeCurrency | Token {
     nativeCurrency = new BscNativeCurrency(chainId)
   } else if (isAvalanche(chainId)) {
     nativeCurrency = new AvaxNativeCurrency(chainId)
+  } else if (isBittorrent(chainId)) {
+    nativeCurrency = new BttNativeCurrency(chainId)
   } else {
     nativeCurrency = ExtendedEther.onChain(chainId)
   }
