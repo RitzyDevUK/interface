@@ -6147,6 +6147,18 @@
     tiny-invariant "^1.1.0"
     toformat "^2.0.0"
 
+"@uniswap/sdk-core@npm:@spookyswaptest/sdk-core":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@spookyswaptest/sdk-core/-/sdk-core-1.0.1.tgz#8097370ee9cf9cf57540d5ffd3b463676779df5c"
+  integrity sha512-wmDhgtweN8IHzkcdC3goH63UFC7MqisR6sq9FeMbOh01LsXiAOh8DD8LjSJBh8to0GRtVmwtaI6Se36CRmXrgw==
+  dependencies:
+    "@ethersproject/address" "^5.0.2"
+    big.js "^5.2.2"
+    decimal.js-light "^2.5.0"
+    jsbi "^3.1.4"
+    tiny-invariant "^1.1.0"
+    toformat "^2.0.0"
+
 "@uniswap/smart-order-router@^3.15.0":
   version "3.15.0"
   resolved "https://registry.yarnpkg.com/@uniswap/smart-order-router/-/smart-order-router-3.15.0.tgz#f9e1f7ecdf48b9bae7c182acb99289e3ee1acce3"
